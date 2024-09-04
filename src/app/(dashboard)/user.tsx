@@ -33,11 +33,22 @@ export function User() {
         }
     }
 
-    useEffect(() => {
-        AxiosInstance.get("/auth/current_user", { withCredentials: true }).then(response => {
+    const getUserData = async () => {
+        try {
+            const response = await AxiosInstance.get("/auth/current_user", { withCredentials: true });
             console.log(response.data);
-            setUserInfo(response.data)
-        })
+            setUserInfo(response.data);
+        } catch (error: any) {
+            if (error.response && error.response.status === 401) {
+                window.location.href = "/login";
+            } else {
+                console.error(error);
+            }
+        }
+    }
+
+    useEffect(() => {
+        getUserData();
     }, [])
 
     return (
