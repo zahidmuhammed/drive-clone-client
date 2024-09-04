@@ -21,6 +21,7 @@ import { DriveLogo } from '@/components/icons';
 import Providers from './providers';
 import { SearchInput } from './search';
 import { TbGridDots } from "react-icons/tb";
+import UploadButton from './upload';
 
 
 export default function DashboardLayout({
@@ -42,7 +43,7 @@ export default function DashboardLayout({
                         <TbGridDots className='size-5 cursor-pointer' />
                         <User />
                     </header>
-                    <main className="grid flex-1 items-start gap-2 p-4 sm:px-6 sm:py-0 md:gap-4 bg-white rounded-xl">
+                    <main className="grid flex-1 min-h-[calc(100vh-100px)]  h-[calc(100vh-100px)] items-start gap-2 p-4 sm:px-6 sm:py-0 md:gap-4 bg-white rounded-xl">
                         {children}
                     </main>
                 </div>
@@ -56,7 +57,7 @@ function DesktopNav() {
     const array = Array.from({ length: 20 }).map(item => { name: "zee" })
     return (
         <aside className="fixed inset-y-0 left-0 z-10 hidden w-[250px] flex-col  bg-[#F8FAFD] sm:flex">
-            <nav className="flex text-sm flex-col gap-1 px-2 sm:py-5">
+            <nav className="flex text-sm flex-col gap-1 px-4 sm:py-5">
                 <Link
                     href="/"
                     className="group flex shrink-0 items-center gap-2 rounded-full text-lg font-semibold  md:h-8 md:w-8 md:text-base"
@@ -67,9 +68,11 @@ function DesktopNav() {
                     </div>
                 </Link>
 
+                <UploadButton />
+
                 <Link
                     href="#"
-                    className="flex items-center mt-5 gap-4 px-5 text-muted-foreground hover:text-foreground hover:bg-[#C2E7FE] hover:rounded-full h-8"
+                    className="flex items-center  gap-4 px-5 text-muted-foreground hover:text-foreground hover:bg-[#C2E7FE] hover:rounded-full h-8"
                 >
                     <MdHomeFilled className="h-4 w-4" />
                     Home

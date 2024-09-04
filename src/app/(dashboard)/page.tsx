@@ -1,7 +1,6 @@
-import { File, PlusCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-// import { ProductsTable } from './products-table';
-// import { getProducts } from '@/lib/db';
+import { BsExclamationCircle } from "react-icons/bs";
+import { TiArrowSortedDown } from "react-icons/ti";
+import FilesList from './files-list';
 
 export default async function ProductsPage({
     searchParams
@@ -10,24 +9,14 @@ export default async function ProductsPage({
 }) {
     const search = searchParams.q ?? '';
     const offset = searchParams.offset ?? 0;
-    //   const { products, newOffset, totalProducts } = await getProducts(
-    //     search,
-    //     Number(offset)
-    //   );
 
     return (
-        <div className='p-5'>
-            {/* <div className="flex items-center ">
-                <div className="ml-auto flex items-center gap-2">
-                    <Button size="sm" className="h-8 gap-1">
-                        <PlusCircle className="h-3.5 w-3.5" />
-                        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                            Add Product
-                        </span>
-                    </Button>
-                </div>
-            </div> */}
-            <div>content</div>
+        <div className='py-3'>
+            <div className='flex justify-between items-center'>
+                <div className='text-xl flex items-center gap-2'>My Drive <TiArrowSortedDown className='size-4' /></div>
+                <div><BsExclamationCircle className='size-5' /></div>
+            </div>
+            <FilesList />
         </div>
     );
 }

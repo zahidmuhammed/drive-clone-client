@@ -21,14 +21,11 @@ const AxiosInstance = axios.create({ baseURL: BASE_URL })
 export function User() {
 
     const [userinfo, setUserInfo] = useState<any>()
-    console.log("User Info", userinfo)
-
 
     const handleSignOut = async () => {
         try {
             window.open("http://localhost:5000/auth/logout", "_self");
         } catch (error) {
-
             console.log(error)
         }
     }
@@ -69,8 +66,7 @@ export function User() {
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
+                <DropdownMenuLabel>👋  Hi, {userinfo?.username || ""} </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleSignOut}>
                     <button type="button" >Sign Out</button>

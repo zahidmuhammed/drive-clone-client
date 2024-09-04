@@ -25,7 +25,7 @@ export function SearchInput() {
                 name="q"
                 type="search"
                 placeholder="Search..."
-                className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
+                className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px] focus-visible:ring-0"
             />
             {isPending && <Spinner />}
         </form>
