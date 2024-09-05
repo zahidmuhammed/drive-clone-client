@@ -18,7 +18,9 @@ To configure your application, you may need to create a `.env` file in the root 
 
 ### Example `.env` file:
 
+```env
 BASE_URl="http://localhost:5000" # Use your backend API URL here
+```
 
 ## Getting Started
 
