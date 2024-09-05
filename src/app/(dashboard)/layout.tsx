@@ -23,7 +23,7 @@ import { SearchInput } from './search';
 import { TbGridDots } from "react-icons/tb";
 import UploadButton from './upload';
 
-// TODO : Dark mode ui for dashboard
+// TODO : Dark mode ui
 export default function DashboardLayout({
     children
 }: {
