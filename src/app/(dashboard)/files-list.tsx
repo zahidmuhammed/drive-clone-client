@@ -1,7 +1,7 @@
 "use client"
 
 import axios from "axios";
-import React, { useEffect, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import Image from "next/image";
 import {
     Select,
@@ -30,9 +30,19 @@ import {
     DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Mail } from "lucide-react"
 import { FaRegTrashCan } from "react-icons/fa6";
 import { toast } from "sonner";
+
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 
 const BASE_URL = "http://localhost:5000";
@@ -158,6 +168,8 @@ const FileComponent = ({ file }: { file: any }) => {
 
 export function FileOptions({ children, file }: { children?: any, file: any }) {
 
+    const [openModal, setOpen] = useState(false)
+
 
     const handleDelete = async () => {
         try {
@@ -177,44 +189,99 @@ export function FileOptions({ children, file }: { children?: any, file: any }) {
 
 
     return (
-        <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                {children}
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
-                <DropdownMenuGroup>
-                    <DropdownMenuSub>
-                        <DropdownMenuSubTrigger>
-                            <TiArrowMove className="mr-2 h-4 w-4" />
-                            <span className="text-xs">Open with</span>
-                        </DropdownMenuSubTrigger>
-                        <DropdownMenuPortal>
-                            <DropdownMenuSubContent>
-                                <DropdownMenuItem>
-                                    <FaRegEye className="mr-2 h-4 w-4" />
-                                    <span className="text-xs">Preview</span>
-                                </DropdownMenuItem>
-                            </DropdownMenuSubContent>
-                        </DropdownMenuPortal>
-                    </DropdownMenuSub>
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                    <DropdownMenuItem>
-                        <MdOutlineDriveFileRenameOutline className="mr-2 h-4 w-4" />
-                        <span className="text-xs">Rename</span>
-                    </DropdownMenuItem>
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                    <DropdownMenuItem onClick={handleDelete}>
-                        <FaRegTrashCan className="mr-2 h-3 w-3" />
-                        <span className="text-xs">Delete</span>
-                    </DropdownMenuItem>
-                </DropdownMenuGroup>
-            </DropdownMenuContent>
-        </DropdownMenu>
+        <Dialog open={openModal}>
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    {children}
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56">
+                    <DropdownMenuGroup>
+                        <DropdownMenuSub>
+                            <DropdownMenuSubTrigger>
+                                <TiArrowMove className="mr-2 h-4 w-4" />
+                                <span className="text-xs">Open with</span>
+                            </DropdownMenuSubTrigger>
+                            <DropdownMenuPortal>
+                                <DropdownMenuSubContent>
+                                    <DropdownMenuItem>
+                                        <FaRegEye className="mr-2 h-4 w-4" />
+                                        <span className="text-xs">Preview</span>
+                                    </DropdownMenuItem>
+                                </DropdownMenuSubContent>
+                            </DropdownMenuPortal>
+                        </DropdownMenuSub>
+                    </DropdownMenuGroup>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuGroup>
+                        <DropdownMenuItem onClick={() => setOpen(true)}>
+                            <MdOutlineDriveFileRenameOutline className="mr-2 h-4 w-4" />
+                            <span className="text-xs">Rename</span>
+                        </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuGroup>
+                        <DropdownMenuItem onClick={handleDelete}>
+                            <FaRegTrashCan className="mr-2 h-3 w-3" />
+                            <span className="text-xs">Delete</span>
+                        </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                </DropdownMenuContent>
+            </DropdownMenu>
+            <RenameComponent file={file} setOpen={setOpen} />
+        </Dialog>
     )
 }
 
+
+const RenameComponent = ({ file, setOpen }: { file: any, setOpen: Dispatch<SetStateAction<boolean>> }) => {
+
+    const [newFileName, setNewFileName] = useState(file?.fileName || "");
+
+    const handleRenameSubmit = async () => {
+
+        if (!newFileName) {
+            toast.error("File name cannot be empty");
+            return;
+        }
+
+        try {
+            const response = await AxiosInstance.patch(`/api/files/${file?._id}`, { fileName: newFileName }, {
+                withCredentials: true,
+            });
+            if (response.status === 200) {
+                toast.success("File renamed successfully");
+                setOpen(false);
+            }
+        } catch (error: any) {
+            toast.error("File renaming failed");
+            console.error(error);
+        }
+    }
+
+    return <>
+        <DialogContent >
+            <DialogHeader>
+                <DialogTitle>Rename </DialogTitle>
+                <DialogDescription></DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4">
+                <div className="grid grid-cols-1 items-center gap-4">
+                    <Input
+                        id="name"
+                        value={newFileName}
+                        onChange={(e) => setNewFileName(e.target.value)}
+                        className="col-span-3 focus-visible:ring-0"
+                    />
+                </div>
+            </div>
+            <DialogFooter>
+                <Button type="button" variant="secondary" onClick={() => setOpen(false)}>
+                    Cancel
+                </Button>
+                <Button type="submit" onClick={handleRenameSubmit}>Ok</Button>
+            </DialogFooter>
+        </DialogContent>
+    </>
+
+}
 

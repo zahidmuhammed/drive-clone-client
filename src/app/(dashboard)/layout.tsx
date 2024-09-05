@@ -54,7 +54,6 @@ export default function DashboardLayout({
 
 function DesktopNav() {
 
-    const array = Array.from({ length: 20 }).map(item => { name: "zee" })
     return (
         <aside className="fixed inset-y-0 left-0 z-10 hidden w-[250px] flex-col  bg-[#F8FAFD] sm:flex">
             <nav className="flex text-sm flex-col gap-1 px-4 sm:py-5">
@@ -135,20 +134,7 @@ function DesktopNav() {
                 </Link>
 
             </nav>
-            {/* <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
-                <Tooltip>
-                    <TooltipTrigger asChild>
-                        <Link
-                            href="#"
-                            className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                        >
-                            <Settings className="h-5 w-5" />
-                            <span className="sr-only">Settings</span>
-                        </Link>
-                    </TooltipTrigger>
-                    <TooltipContent side="right">Settings</TooltipContent>
-                </Tooltip>
-            </nav> */}
+
         </aside >
     );
 }
