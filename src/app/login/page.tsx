@@ -1,3 +1,7 @@
+import Image from 'next/image';
+import { redirect } from 'next/navigation'
+
+import Urls from "@/redux/Urls"
 import { Button } from '@/components/ui/button';
 import {
     Card,
@@ -6,9 +10,6 @@ import {
     CardHeader,
     CardTitle
 } from '@/components/ui/card';
-import { redirect } from 'next/navigation'
-import Urls from "@/redux/Urls"
-import Image from 'next/image';
 
 export default function LoginPage() {
     return (
@@ -25,7 +26,6 @@ export default function LoginPage() {
                     </CardDescription>
                 </CardHeader>
                 <CardFooter>
-
                     <form
                         action={async () => {
                             'use server';
@@ -33,7 +33,6 @@ export default function LoginPage() {
                         }}
                         className="w-full"
                     >
-
                         <Button className="w-full" >Sign in with Google</Button>
                     </form>
                 </CardFooter>
