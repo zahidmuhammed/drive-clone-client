@@ -1,4 +1,4 @@
-const domain = process.env.BASE_URL || "http://localhost:5000";
+const domain = process.env.BASE_URL;
 
 const Urls = {
     domain,
