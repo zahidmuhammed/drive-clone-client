@@ -30,7 +30,6 @@ export function User() {
     const getUserData = async () => {
         try {
             const response = await axiosClient.get("/auth/current_user", { withCredentials: true });
-            console.log(response.data);
             setUserInfo(response.data);
         } catch (error: any) {
             if (error.response && error.response.status === 401) {
