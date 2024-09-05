@@ -24,7 +24,7 @@ export function User() {
 
     const handleSignOut = async () => {
         try {
-            window.open("http://localhost:5000/auth/logout", "_self");
+            window.open("http://localhost:5000/api/auth/logout", "_self");
         } catch (error) {
             console.log(error)
         }
@@ -32,7 +32,7 @@ export function User() {
 
     const getUserData = async () => {
         try {
-            const response = await AxiosInstance.get("/auth/current_user", { withCredentials: true });
+            const response = await AxiosInstance.get("/api/auth/current_user", { withCredentials: true });
             console.log(response.data);
             setUserInfo(response.data);
         } catch (error: any) {

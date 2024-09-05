@@ -8,7 +8,7 @@ import {
     CardTitle
 } from '@/components/ui/card';
 import { redirect } from 'next/navigation'
-
+import Urls from "@/redux/Urls"
 
 export default function LoginPage() {
     return (
@@ -25,7 +25,7 @@ export default function LoginPage() {
                     <form
                         action={async () => {
                             'use server';
-                            redirect("http://localhost:5000/auth/google")
+                            redirect(`${Urls.baseUrl}/auth/google`)
                         }}
                         className="w-full"
                     >

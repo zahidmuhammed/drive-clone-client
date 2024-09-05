@@ -71,63 +71,63 @@ function DesktopNav() {
 
                 <Link
                     href="#"
-                    className="flex items-center  gap-4 px-5 text-muted-foreground hover:text-foreground hover:bg-[#C2E7FE] hover:rounded-full h-8"
+                    className="flex items-center  gap-4 px-5 text-muted-foreground hover:text-foreground hover:bg-[#e0e3e7] hover:rounded-full h-8"
                 >
                     <MdHomeFilled className="h-4 w-4" />
                     Home
                 </Link>
                 <Link
                     href="#"
-                    className="flex items-center gap-4 px-5 text-muted-foreground hover:text-foreground hover:bg-[#C2E7FE] hover:rounded-full h-8"
+                    className="flex items-center gap-4 px-5  text-foreground bg-[#C2E7FE] rounded-full h-8"
                 >
                     <FaHardDrive className="h-3 w-3 mx-0.5" />
                     My Drive
                 </Link>
                 <Link
                     href="#"
-                    className="flex items-center gap-4 mb-3 px-5 text-muted-foreground hover:text-foreground hover:bg-[#C2E7FE] hover:rounded-full h-8"
+                    className="flex items-center gap-4 mb-3 px-5 text-muted-foreground hover:text-foreground hover:bg-[#e0e3e7] hover:rounded-full h-8"
                 >
                     <FaLaptopFile className='h-4 w-4' />
                     Computers
                 </Link>
                 <Link
                     href="#"
-                    className="flex items-center gap-4 px-5 text-muted-foreground hover:text-foreground hover:bg-[#C2E7FE] hover:rounded-full h-8"
+                    className="flex items-center gap-4 px-5 text-muted-foreground hover:text-foreground hover:bg-[#e0e3e7] hover:rounded-full h-8"
                 >
                     <LuUsers className="h-4 w-4" />
                     Shared with me
                 </Link>
                 <Link
                     href="#"
-                    className="flex items-center gap-4 px-5 text-muted-foreground hover:text-foreground hover:bg-[#C2E7FE] hover:rounded-full h-8"
+                    className="flex items-center gap-4 px-5 text-muted-foreground hover:text-foreground hover:bg-[#e0e3e7] hover:rounded-full h-8"
                 >
                     <FaRegClock className="h-4 w-4" />
                     Recent
                 </Link>
                 <Link
                     href="#"
-                    className="flex items-center gap-4 mb-3 px-5 text-muted-foreground hover:text-foreground hover:bg-[#C2E7FE] hover:rounded-full h-8"
+                    className="flex items-center gap-4 mb-3 px-5 text-muted-foreground hover:text-foreground hover:bg-[#e0e3e7] hover:rounded-full h-8"
                 >
                     <FaRegStar className="h-4 w-4" />
                     Starred
                 </Link>
                 <Link
                     href="#"
-                    className="flex items-center gap-4 px-5 text-muted-foreground hover:text-foreground hover:bg-[#C2E7FE] hover:rounded-full h-8"
+                    className="flex items-center gap-4 px-5 text-muted-foreground hover:text-foreground hover:bg-[#e0e3e7] hover:rounded-full h-8"
                 >
                     <RiSpam2Line className="h-5 w-5" />
                     Spam
                 </Link>
                 <Link
                     href="#"
-                    className="flex items-center gap-4 px-5 text-muted-foreground hover:text-foreground hover:bg-[#C2E7FE] hover:rounded-full h-8"
+                    className="flex items-center gap-4 px-5 text-muted-foreground hover:text-foreground hover:bg-[#e0e3e7] hover:rounded-full h-8"
                 >
                     <FaRegTrashCan className="h-4 w-4" />
                     Trash
                 </Link>
                 <Link
                     href="#"
-                    className="flex items-center gap-4 px-5 text-muted-foreground hover:text-foreground hover:bg-[#C2E7FE] hover:rounded-full h-8"
+                    className="flex items-center gap-4 px-5 text-muted-foreground hover:text-foreground hover:bg-[#e0e3e7] hover:rounded-full h-8"
                 >
                     <MdOutlineCloud className="h-4 w-4" />
                     Storage

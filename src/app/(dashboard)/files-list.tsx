@@ -43,6 +43,8 @@ import {
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
+import { FileTypes, getFiles } from "@/redux/slices/filesSlice";
 
 
 const BASE_URL = "http://localhost:5000";
@@ -50,24 +52,11 @@ const AxiosInstance = axios.create({ baseURL: BASE_URL });
 
 const FilesList = () => {
 
-    const [files, setFiles] = useState<any[]>([])
-
-
-    const getProducts = async () => {
-        try {
-            const response = await AxiosInstance.get("/api/files", {
-                withCredentials: true,
-            });
-
-            setFiles(response?.data?.files)
-
-        } catch (error: any) {
-            console.error(error);
-        }
-    }
+    const dispatch = useAppDispatch()
+    const filesInfo = useAppSelector(state => state.filesReducer).files
 
     useEffect(() => {
-        getProducts()
+        dispatch(getFiles())
     }, [])
 
     return (
@@ -105,9 +94,9 @@ const FilesList = () => {
                 </Select>
             </div>
             <div className="grid grid-cols-1 gap-2 md:gap-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {files?.map(file => <FileComponent file={file} />)}
+                {filesInfo.data?.map(file => <FileComponent key={file._id} file={file} />)}
             </div>
-            {files?.length === 0 && <div className="flex justify-center items-center">No Files Found !</div>}
+            {filesInfo.data?.length === 0 && <div className="flex justify-center items-center">No Files Found !</div>}
         </div>
     )
 }
@@ -115,10 +104,9 @@ const FilesList = () => {
 export default FilesList
 
 
-const FileComponent = ({ file }: { file: any }) => {
+const FileComponent = ({ file }: { file: FileTypes }) => {
 
-    const fileExtension = file?.fileUrl.split('.').pop();
-
+    const fileExtension = file.fileUrl.split('.').pop() || "doc";
 
     const fileTypeLogo = () => {
         if (["pdf"]?.includes(fileExtension)) {
@@ -166,9 +154,10 @@ const FileComponent = ({ file }: { file: any }) => {
 
 
 
-export function FileOptions({ children, file }: { children?: any, file: any }) {
+export function FileOptions({ children, file }: { children?: any, file: FileTypes }) {
 
     const [openModal, setOpen] = useState(false)
+    const dispatch = useAppDispatch()
 
 
     const handleDelete = async () => {
@@ -178,6 +167,7 @@ export function FileOptions({ children, file }: { children?: any, file: any }) {
             });
             if (response.status === 200) {
                 toast.success("File deleted successfully")
+                dispatch(getFiles())
             }
 
         } catch (error: any) {
@@ -233,9 +223,11 @@ export function FileOptions({ children, file }: { children?: any, file: any }) {
 }
 
 
-const RenameComponent = ({ file, setOpen }: { file: any, setOpen: Dispatch<SetStateAction<boolean>> }) => {
+const RenameComponent = ({ file, setOpen }: { file: FileTypes, setOpen: Dispatch<SetStateAction<boolean>> }) => {
 
     const [newFileName, setNewFileName] = useState(file?.fileName || "");
+    const dispatch = useAppDispatch()
+
 
     const handleRenameSubmit = async () => {
 
@@ -250,6 +242,7 @@ const RenameComponent = ({ file, setOpen }: { file: any, setOpen: Dispatch<SetSt
             });
             if (response.status === 200) {
                 toast.success("File renamed successfully");
+                dispatch(getFiles());
                 setOpen(false);
             }
         } catch (error: any) {
