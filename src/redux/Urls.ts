@@ -1,4 +1,4 @@
-const domain = process.env.BASE_URL;
+const domain = process.env.NEXT_PUBLIC_BASE_URL;
 
 const Urls = {
     domain,
