@@ -12,10 +12,10 @@ import {
 } from '@/components/ui/dropdown-menu';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import Urls from '@/redux/Urls';
 
 
-const BASE_URL = "http://localhost:5000"
-const AxiosInstance = axios.create({ baseURL: BASE_URL })
+const AxiosInstance = axios.create({ baseURL: Urls.baseUrl })
 
 
 export function User() {
@@ -32,7 +32,7 @@ export function User() {
 
     const getUserData = async () => {
         try {
-            const response = await AxiosInstance.get("/api/auth/current_user", { withCredentials: true });
+            const response = await AxiosInstance.get("/auth/current_user", { withCredentials: true });
             console.log(response.data);
             setUserInfo(response.data);
         } catch (error: any) {

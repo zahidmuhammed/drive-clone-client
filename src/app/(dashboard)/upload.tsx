@@ -4,8 +4,9 @@ import React from 'react'
 import { FiPlus } from "react-icons/fi";
 import { toast } from "sonner"
 import axios from 'axios';
-const BASE_URL = "http://localhost:5000"
-const AxiosInstance = axios.create({ baseURL: BASE_URL })
+import Urls from '@/redux/Urls';
+
+const AxiosInstance = axios.create({ baseURL: Urls.baseUrl })
 
 const UploadButton = () => {
 

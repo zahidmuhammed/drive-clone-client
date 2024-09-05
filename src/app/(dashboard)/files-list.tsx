@@ -45,10 +45,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { FileTypes, getFiles } from "@/redux/slices/filesSlice";
+import Urls from "@/redux/Urls";
 
-
-const BASE_URL = "http://localhost:5000";
-const AxiosInstance = axios.create({ baseURL: BASE_URL });
+const AxiosInstance = axios.create({ baseURL: Urls.baseUrl });
 
 const FilesList = () => {
 
@@ -93,7 +92,7 @@ const FilesList = () => {
                     </SelectContent>
                 </Select>
             </div>
-            <div className="grid grid-cols-1 gap-2 md:gap-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="flex gap-2 flex-wrap">
                 {filesInfo.data?.map(file => <FileComponent key={file._id} file={file} />)}
             </div>
             {filesInfo.data?.length === 0 && <div className="flex justify-center items-center">No Files Found !</div>}
