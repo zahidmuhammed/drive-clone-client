@@ -57,9 +57,9 @@ const FilesList = () => {
                     </SelectContent>
                 </Select>
             </div>
-            <div className="flex gap-2 flex-wrap overflow-auto h-[calc(100vh-210px)]">
+            {filesInfo.data?.length > 0 && <div className="flex gap-2 flex-wrap overflow-auto h-[calc(100vh-210px)]">
                 {filesInfo.data?.map(file => <FileComponent key={file._id} file={file} />)}
-            </div>
+            </div>}
             {filesInfo.data?.length === 0 && <div className="flex flex-col md:justify-center items-center h-[calc(100vh-300px)]">
                 <Image src="/empty-data.svg" alt="empty" width={500} height={500} className="h-[50vh] aspect-square" />
                 <div>Add Files Here</div>
