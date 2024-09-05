@@ -1,6 +1,6 @@
 import { BsExclamationCircle } from "react-icons/bs";
 import { TiArrowSortedDown } from "react-icons/ti";
-import FilesList from './files-list';
+import FilesList from './mydrive/files-list';
 
 export default async function ProductsPage({
     searchParams
