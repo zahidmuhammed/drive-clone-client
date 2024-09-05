@@ -1,6 +1,5 @@
 "use client"
 
-import axios from "axios";
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import Image from "next/image";
 import {
@@ -21,10 +20,8 @@ import {
     DropdownMenuContent,
     DropdownMenuGroup,
     DropdownMenuItem,
-    DropdownMenuLabel,
     DropdownMenuPortal,
     DropdownMenuSeparator,
-    DropdownMenuShortcut,
     DropdownMenuSub,
     DropdownMenuSubContent,
     DropdownMenuSubTrigger,
@@ -45,9 +42,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { FileTypes, getFiles } from "@/redux/slices/filesSlice";
-import Urls from "@/redux/Urls";
-
-const AxiosInstance = axios.create({ baseURL: Urls.baseUrl });
+import { axiosClient } from "@/redux/store"
+import Link from 'next/link';
 
 const FilesList = () => {
 
@@ -55,7 +51,7 @@ const FilesList = () => {
     const filesInfo = useAppSelector(state => state.filesReducer).files
 
     useEffect(() => {
-        dispatch(getFiles())
+        dispatch(getFiles({}))
     }, [])
 
     return (
@@ -95,7 +91,10 @@ const FilesList = () => {
             <div className="flex gap-2 flex-wrap">
                 {filesInfo.data?.map(file => <FileComponent key={file._id} file={file} />)}
             </div>
-            {filesInfo.data?.length === 0 && <div className="flex justify-center items-center">No Files Found !</div>}
+            {filesInfo.data?.length === 0 && <div className="flex flex-col md:justify-center items-center h-[calc(100vh-300px)]">
+                <Image src="/empty-data.svg" alt="empty" width={500} height={500} className="h-[50vh] aspect-square" />
+                <div>Add Files Here</div>
+            </div>}
         </div>
     )
 }
@@ -110,7 +109,7 @@ const FileComponent = ({ file }: { file: FileTypes }) => {
     const fileTypeLogo = () => {
         if (["pdf"]?.includes(fileExtension)) {
             return <BsFileEarmarkPdfFill className="fill-[#EA4336] size-4" />
-        } if (["png", "jpeg"]?.includes(fileExtension)) {
+        } if (["png", "jpeg", "jpg"]?.includes(fileExtension)) {
             return <MdImage className="fill-[#EA4336] size-4" />
         } else
             return <RiFileList2Fill className="fill-[#4285F4] size-4" />
@@ -123,7 +122,7 @@ const FileComponent = ({ file }: { file: FileTypes }) => {
                 <BsFileEarmarkPdfFill className="fill-[#EA4336] size-16" />
             </div>
         }
-        if (["png", "jpeg"]?.includes(fileExtension)) {
+        if (["png", "jpeg", "jpg"]?.includes(fileExtension)) {
             return <Image src={file?.fileUrl} alt="" height={100} width={100} className="h-full w-full rounded bg-cover" />
         }
         return <div className="flex justify-center items-center h-full">
@@ -161,12 +160,12 @@ export function FileOptions({ children, file }: { children?: any, file: FileType
 
     const handleDelete = async () => {
         try {
-            const response = await AxiosInstance.delete(`/api/files/${file?._id}`, {
+            const response = await axiosClient.delete(`/files/${file?._id}`, {
                 withCredentials: true,
             });
             if (response.status === 200) {
                 toast.success("File deleted successfully")
-                dispatch(getFiles())
+                dispatch(getFiles({}))
             }
 
         } catch (error: any) {
@@ -192,10 +191,12 @@ export function FileOptions({ children, file }: { children?: any, file: FileType
                             </DropdownMenuSubTrigger>
                             <DropdownMenuPortal>
                                 <DropdownMenuSubContent>
-                                    <DropdownMenuItem>
-                                        <FaRegEye className="mr-2 h-4 w-4" />
-                                        <span className="text-xs">Preview</span>
-                                    </DropdownMenuItem>
+                                    <Link href={file?.fileUrl} target='_blank'>
+                                        <DropdownMenuItem>
+                                            <FaRegEye className="mr-2 h-4 w-4" />
+                                            <span className="text-xs">Preview</span>
+                                        </DropdownMenuItem>
+                                    </Link>
                                 </DropdownMenuSubContent>
                             </DropdownMenuPortal>
                         </DropdownMenuSub>
@@ -236,12 +237,12 @@ const RenameComponent = ({ file, setOpen }: { file: FileTypes, setOpen: Dispatch
         }
 
         try {
-            const response = await AxiosInstance.patch(`/api/files/${file?._id}`, { fileName: newFileName }, {
+            const response = await axiosClient.patch(`/files/${file?._id}`, { fileName: newFileName }, {
                 withCredentials: true,
             });
             if (response.status === 200) {
                 toast.success("File renamed successfully");
-                dispatch(getFiles());
+                dispatch(getFiles({}));
                 setOpen(false);
             }
         } catch (error: any) {

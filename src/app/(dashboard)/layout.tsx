@@ -37,7 +37,7 @@ export default function DashboardLayout({
                     <header className="sticky top-0 z-30  flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:pl-0 sm:pr-4">
                         <MobileNav />
                         <SearchInput />
-                        <div className='flex-1'></div>
+                        <div className='md:flex-1'></div>
                         <FaRegCircleQuestion className="size-5 cursor-pointer" />
                         <Settings className="size-5 cursor-pointer" />
                         <TbGridDots className='size-5 cursor-pointer' />

@@ -3,19 +3,28 @@
 import React from 'react'
 import { FiPlus } from "react-icons/fi";
 import { toast } from "sonner"
-import axios from 'axios';
-import Urls from '@/redux/Urls';
-
-const AxiosInstance = axios.create({ baseURL: Urls.baseUrl })
+import { useAppDispatch } from '@/hooks/reduxHooks';
+import { getFiles } from '@/redux/slices/filesSlice';
+import { axiosClient } from "@/redux/store"
 
 const UploadButton = () => {
+    const dispatch = useAppDispatch()
 
 
     const handleFileUpload = async (formData: FormData) => {
         try {
-            const response = await AxiosInstance.post("/api/files/upload", formData, { withCredentials: true });
+            // Check file size limit (10MB)
+            const fileSizeLimit = 10 * 1024 * 1024; // 10MB in bytes
+            const file = formData.get('file') as File;
+            if (file && file.size > fileSizeLimit) {
+                toast.error("File size exceeds 10MB limit!");
+                return;
+            }
+
+            const response = await axiosClient.post("/files/upload", formData, { withCredentials: true });
             if (response.status === 200) {
                 toast.success("File uploaded successfully 👍")
+                dispatch(getFiles({}))
             }
             console.log(response);
         } catch (error) {
@@ -34,9 +43,11 @@ const UploadButton = () => {
                     name="file"
                     onChange={(e) => {
                         if (e.target.files && e.target.files.length > 0) {
+                            const file = e.target.files[0];
                             const formData = new FormData();
-                            formData.append('file', e.target.files[0]);
+                            formData.append('file', file);
                             handleFileUpload(formData);
+                            e.target.value = ''; // Reset the input value to allow for the same file to be selected again
                         }
                     }} />
                 <label

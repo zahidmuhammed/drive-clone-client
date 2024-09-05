@@ -31,13 +31,19 @@ export const initialState: FilesInitialState = {
 };
 
 // async thunk to get events
-export const getFiles = createAsyncThunk("events/getFiles", async () => {
-    const res = await axios.get(Urls.baseUrl + Urls.files, {
-        withCredentials: true,
-    });
+export const getFiles = createAsyncThunk(
+    "events/getFiles",
+    async (searchParams: { search?: string }) => {
+        const res = await axios.get(Urls.baseUrl + Urls.files, {
+            withCredentials: true,
+            params: {
+                search: searchParams.search,
+            },
+        });
 
-    return res.data?.files || [];
-});
+        return res.data?.files || [];
+    }
+);
 
 export const eventsSlice = createSlice({
     name: "files",

@@ -1,11 +1,12 @@
 import axios from "axios";
 import { configureStore } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
-import { Env } from "@/lib/Env";
+
 import Urls from "./Urls";
+import { Env } from "@/lib/Env";
 import { RootReducer } from "./reducers";
 
-const client = axios.create({
+export const axiosClient = axios.create({
     baseURL: Urls.baseUrl,
     responseType: "json",
 });
@@ -18,7 +19,7 @@ export const makeStore = () => {
             getDefaultMiddleware({
                 thunk: {
                     extraArgument: {
-                        axios: { ...client },
+                        axios: { ...axiosClient },
                     },
                 },
                 serializableCheck: false,

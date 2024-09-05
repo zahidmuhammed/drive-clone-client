@@ -10,12 +10,9 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Urls from '@/redux/Urls';
-
-
-const AxiosInstance = axios.create({ baseURL: Urls.baseUrl })
+import { axiosClient } from "@/redux/store"
 
 
 export function User() {
@@ -24,7 +21,7 @@ export function User() {
 
     const handleSignOut = async () => {
         try {
-            window.open("http://localhost:5000/api/auth/logout", "_self");
+            window.open(`${Urls.baseUrl}/auth/logout`, "_self");
         } catch (error) {
             console.log(error)
         }
@@ -32,7 +29,7 @@ export function User() {
 
     const getUserData = async () => {
         try {
-            const response = await AxiosInstance.get("/auth/current_user", { withCredentials: true });
+            const response = await axiosClient.get("/auth/current_user", { withCredentials: true });
             console.log(response.data);
             setUserInfo(response.data);
         } catch (error: any) {
